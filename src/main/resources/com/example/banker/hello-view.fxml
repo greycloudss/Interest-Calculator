@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.paint.LinearGradient?>
@@ -10,45 +14,90 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="543.0" prefWidth="855.0" style="-fx-background-color: #212230;" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <BorderPane layoutX="-6.0" layoutY="-5.0" prefHeight="553.0" prefWidth="867.0">
-         <left>
-            <VBox prefHeight="456.0" prefWidth="225.0" BorderPane.alignment="CENTER" />
-         </left>
-         <top>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" style="-fx-background-color: #191a24;" BorderPane.alignment="CENTER">
-               <children>
-                  <Text fontSmoothingType="LCD" stroke="WHITE" strokeLineCap="BUTT" strokeLineJoin="BEVEL" strokeWidth="0.0" text="Interest Calculator">
-                     <font>
-                        <Font name="Courier New Italic" size="49.0" />
-                     </font>
-                     <fill>
-                        <LinearGradient endX="1.0" endY="1.0">
-                           <stops>
-                              <Stop>
-                                 <color>
-                                    <Color red="0.8617283701896667" green="0.8518518805503845" blue="1.0" />
-                                 </color>
-                              </Stop>
-                              <Stop offset="0.006711409395973154">
-                                 <color>
-                                    <Color red="0.8617283701896667" green="0.8518518805503845" blue="1.0" />
-                                 </color>
-                              </Stop>
-                              <Stop offset="1.0">
-                                 <color>
-                                    <Color red="0.9853395223617554" green="0.9120370149612427" blue="1.0" />
-                                 </color>
-                              </Stop>
-                           </stops>
-                        </LinearGradient>
-                     </fill>
-                  </Text>
-               </children>
-            </HBox>
-         </top>
-      </BorderPane>
-   </children>
+<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="543.0" prefWidth="855.0" style="-fx-background-color: #212230;"
+            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.banker.HelloController">
+   <BorderPane layoutX="-6.0" layoutY="-5.0" prefHeight="553.0" prefWidth="867.0">
+      <left>
+         <VBox alignment="TOP_CENTER" prefHeight="456.0" prefWidth="225.0" BorderPane.alignment="CENTER">
+            <Text fill="WHITE" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="Loan Amount"
+                  textAlignment="CENTER" wrappingWidth="226.9830722808838">
+               <font>
+                  <Font name="Eras Light ITC" size="22.0"/>
+               </font>
+            </Text>
+            <TextField prefHeight="43.0" prefWidth="225.0"
+                       style="-fx-background-color: #2a2d45; -fx-border-radius: 0; -fx-text-fill: white;">
+               <font>
+                  <Font name="Eras Light ITC" size="16.0"/>
+               </font>
+            </TextField>
+            <Pane prefHeight="61.0" prefWidth="227.0"/>
+            <Text fill="WHITE" fontSmoothingType="LCD" layoutX="10.0" layoutY="29.0" strokeType="OUTSIDE"
+                  strokeWidth="0.0" text="Loan Time" textAlignment="CENTER" wrappingWidth="226.9830722808838">
+               <font>
+                  <Font name="Eras Light ITC" size="22.0"/>
+               </font>
+            </Text>
+            <TextField layoutX="10.0" layoutY="35.0" prefHeight="43.0" prefWidth="225.0"
+                       style="-fx-background-color: #2a2d45; -fx-text-fill: white">
+               <font>
+                  <Font name="Eras Light ITC" size="16.0"/>
+               </font>
+            </TextField>
+         </VBox>
+      </left>
+      <top>
+         <HBox alignment="CENTER_LEFT" prefHeight="117.0" prefWidth="867.0" style="-fx-background-color: #191a24;"
+               BorderPane.alignment="CENTER">
+            <Text fontSmoothingType="LCD" stroke="WHITE" strokeLineCap="BUTT" strokeLineJoin="BEVEL"
+                  strokeWidth="0.0" text=" Interest Calculator">
+               <font>
+                  <Font name="Eras Demi ITC" size="38.0"/>
+               </font>
+               <fill>
+                  <LinearGradient>
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.8617283701896667" green="0.8518518805503845" blue="1.0"/>
+                           </color>
+                        </Stop>
+                        <Stop offset="0.006711409395973154">
+                           <color>
+                              <Color red="0.8617283701896667" green="0.8518518805503845" blue="1.0"/>
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.9853395223617554" green="0.9120370149612427" blue="1.0"/>
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </fill>
+            </Text>
+            <Pane prefHeight="117.0" prefWidth="533.0">
+               <Button fx:id="closeButton" layoutX="473.0" layoutY="6.0" onAction="#handleCloseButton" stylesheets="@Styles.css" text="Exit" >
+                  <font>
+                     <Font name="Eras Bold ITC" size="12.0"/>
+                  </font>
+               </Button>
+            </Pane>
+         </HBox>
+      </top>
+      <bottom>
+         <HBox prefHeight="85.0" prefWidth="867.0" BorderPane.alignment="CENTER">
+            <Pane prefHeight="87.0" prefWidth="305.0">
+               <Text fill="WHITE" layoutX="6.0" layoutY="14.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                     text="Tool tip: to ensure your data safety you should probably not show or flaunt the data you are not comfortable sharing. Powered by sktcht.cc"
+                     textAlignment="CENTER" wrappingWidth="383.7734375">
+                  <font>
+                     <Font name="Eras Medium ITC" size="12.0"/>
+                  </font>
+               </Text>
+            </Pane>
+         </HBox>
+      </bottom>
+   </BorderPane>
 </AnchorPane>

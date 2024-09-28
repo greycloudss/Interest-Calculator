@@ -1,0 +1,8 @@
+
+#closeButton {
+    -fx-background: transparent;
+    -fx-border-width: 3px;
+    -fx-background-color: transparent;
+    -fx-border-color: #5c6296;
+    -fx-text-fill: #a9afe5
+}
