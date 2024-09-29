@@ -18,8 +18,6 @@ public class HelloApplication extends Application {
         stage.setResizable(false);
         stage.initStyle(StageStyle.UNDECORATED);
         stage.show();
-        //stage.
-        //stage.close();
     }
 
     public static void main(String[] args) {

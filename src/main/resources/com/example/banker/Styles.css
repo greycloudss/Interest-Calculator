@@ -1,8 +1,64 @@
-
 #closeButton {
     -fx-background: transparent;
-    -fx-border-width: 3px;
     -fx-background-color: transparent;
     -fx-border-color: #5c6296;
-    -fx-text-fill: #a9afe5
+    -fx-text-fill: #a9afe5;
+    -fx-border-radius: 1px;
+    -fx-border-width: 2px;
+    /*-fx-text-fill: #501010;
+    -fx-border-radius: 30px;
+    -fx-background-radius: 30px;
+    -fx-background-color: #fa5757;
+    -fx-border-color: #a63232;*/
+}
+
+#zeroTextBox {
+    -fx-background-color: #2a2d45;
+    -fx-text-fill: white;
+    -fx-border-width: 0px;
+}
+#oneTextBox {
+    -fx-background-color: #2a2d45;
+    -fx-text-fill: white;
+    -fx-border-width: 0px;
+}
+
+#calcButton {
+    -fx-background-color: #2a2d45;
+    -fx-alignment: center;
+    -fx-border-radius: 0%;
+    -fx-border-width: 0px;
+    -fx-text-fill: white;
+}
+
+#calcButton:hover{
+    -fx-background-color: #322e52;
+    -fx-alignment: center;
+    -fx-border-radius: 0%;
+    -fx-border-width: 0px;
+    -fx-text-fill: white;
+}
+
+#choiceBox {
+    -fx-background-color: #2a2d45;
+    -fx-text-fill: white;
+    -fx-border-width: 0px;
+    -fx-border-color: #5c6296;
+    -fx-border-radius: 0px;
+    -fx-padding: 5px;
+    -fx-font-size: 14px;
+}
+
+#choiceBox .list-view {
+    -fx-background-color: #2a2d45;
+    -fx-text-fill: white;
+}
+
+#choiceBox .list-view .list-cell {
+    -fx-background-color: #2a2d45;
+    -fx-text-fill: white;
+}
+
+#choiceBox .list-view .list-cell:hover {
+    -fx-background-color: #322e52;
 }

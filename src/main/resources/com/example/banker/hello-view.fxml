@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -14,63 +17,68 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="543.0" prefWidth="855.0" style="-fx-background-color: #212230;"
-            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.banker.HelloController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="543.0" prefWidth="855.0" style="-fx-background-color: #212230;" stylesheets="@Styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.banker.HelloController">
    <BorderPane layoutX="-6.0" layoutY="-5.0" prefHeight="553.0" prefWidth="867.0">
       <left>
          <VBox alignment="TOP_CENTER" prefHeight="456.0" prefWidth="225.0" BorderPane.alignment="CENTER">
-            <Text fill="WHITE" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="Loan Amount"
-                  textAlignment="CENTER" wrappingWidth="226.9830722808838">
+            <Text fill="WHITE" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="Loan Amount" textAlignment="CENTER" wrappingWidth="226.9830722808838">
                <font>
-                  <Font name="Eras Light ITC" size="22.0"/>
+                  <Font name="Eras Light ITC" size="22.0" />
                </font>
             </Text>
-            <TextField prefHeight="43.0" prefWidth="225.0"
-                       style="-fx-background-color: #2a2d45; -fx-border-radius: 0; -fx-text-fill: white;">
+            <TextField fx:id="zeroTextBox" prefHeight="43.0" prefWidth="225.0">
                <font>
-                  <Font name="Eras Light ITC" size="16.0"/>
+                  <Font name="Eras Light ITC" size="16.0" />
                </font>
             </TextField>
-            <Pane prefHeight="61.0" prefWidth="227.0"/>
-            <Text fill="WHITE" fontSmoothingType="LCD" layoutX="10.0" layoutY="29.0" strokeType="OUTSIDE"
-                  strokeWidth="0.0" text="Loan Time" textAlignment="CENTER" wrappingWidth="226.9830722808838">
+            <Pane prefHeight="36.0" prefWidth="227.0" />
+            <Text fill="WHITE" fontSmoothingType="LCD" layoutX="10.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Loan Time" textAlignment="CENTER" wrappingWidth="226.9830722808838">
                <font>
-                  <Font name="Eras Light ITC" size="22.0"/>
+                  <Font name="Eras Light ITC" size="22.0" />
                </font>
             </Text>
-            <TextField layoutX="10.0" layoutY="35.0" prefHeight="43.0" prefWidth="225.0"
-                       style="-fx-background-color: #2a2d45; -fx-text-fill: white">
+            <TextField fx:id="oneTextBox" layoutX="10.0" layoutY="35.0" prefHeight="43.0" prefWidth="225.0">
                <font>
-                  <Font name="Eras Light ITC" size="16.0"/>
+                  <Font name="Eras Light ITC" size="16.0" />
                </font>
             </TextField>
+            <Pane prefHeight="31.0" prefWidth="227.0" />
+            <Text fill="WHITE" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="Loan Type" textAlignment="CENTER" wrappingWidth="226.9830722808838">
+               <font>
+                  <Font name="Eras Light ITC" size="22.0" />
+               </font>
+            </Text>
+            <ChoiceBox fx:id="choiceBox" prefHeight="25.0" prefWidth="288.0" />
+            <Pane prefHeight="77.0" prefWidth="227.0" />
+            <Button fx:id="calcButton" mnemonicParsing="false" onAction="#handleCalcButton" prefHeight="69.0" prefWidth="227.0" text="Compute">
+            <font>
+               <Font name="Eras Bold ITC" size="12.0" />
+            </font>
+            </Button>
          </VBox>
       </left>
       <top>
-         <HBox alignment="CENTER_LEFT" prefHeight="117.0" prefWidth="867.0" style="-fx-background-color: #191a24;"
-               BorderPane.alignment="CENTER">
-            <Text fontSmoothingType="LCD" stroke="WHITE" strokeLineCap="BUTT" strokeLineJoin="BEVEL"
-                  strokeWidth="0.0" text=" Interest Calculator">
+         <HBox alignment="CENTER_LEFT" prefHeight="117.0" prefWidth="867.0" style="-fx-background-color: #191a24;" BorderPane.alignment="CENTER">
+            <Text fontSmoothingType="LCD" stroke="WHITE" strokeLineCap="BUTT" strokeLineJoin="BEVEL" strokeWidth="0.0" text=" Interest Calculator">
                <font>
-                  <Font name="Eras Demi ITC" size="38.0"/>
+                  <Font name="Eras Demi ITC" size="38.0" />
                </font>
                <fill>
                   <LinearGradient>
                      <stops>
                         <Stop>
                            <color>
-                              <Color red="0.8617283701896667" green="0.8518518805503845" blue="1.0"/>
+                              <Color red="0.8617283701896667" green="0.8518518805503845" blue="1.0" />
                            </color>
                         </Stop>
                         <Stop offset="0.006711409395973154">
                            <color>
-                              <Color red="0.8617283701896667" green="0.8518518805503845" blue="1.0"/>
+                              <Color red="0.8617283701896667" green="0.8518518805503845" blue="1.0" />
                            </color>
                         </Stop>
                         <Stop offset="1.0">
                            <color>
-                              <Color red="0.9853395223617554" green="0.9120370149612427" blue="1.0"/>
+                              <Color red="0.9853395223617554" green="0.9120370149612427" blue="1.0" />
                            </color>
                         </Stop>
                      </stops>
@@ -78,26 +86,39 @@
                </fill>
             </Text>
             <Pane prefHeight="117.0" prefWidth="533.0">
-               <Button fx:id="closeButton" layoutX="473.0" layoutY="6.0" onAction="#handleCloseButton" stylesheets="@Styles.css" text="Exit" >
+               <Button fx:id="closeButton" layoutX="473.0" layoutY="5.0" onAction="#handleCloseButton" stylesheets="@Styles.css" text="Exit">
                   <font>
-                     <Font name="Eras Bold ITC" size="12.0"/>
+                     <Font name="Eras Bold ITC" size="12.0" />
                   </font>
                </Button>
             </Pane>
          </HBox>
       </top>
       <bottom>
-         <HBox prefHeight="85.0" prefWidth="867.0" BorderPane.alignment="CENTER">
+         <HBox prefHeight="43.0" prefWidth="1393.0" BorderPane.alignment="CENTER">
             <Pane prefHeight="87.0" prefWidth="305.0">
-               <Text fill="WHITE" layoutX="6.0" layoutY="14.0" strokeType="OUTSIDE" strokeWidth="0.0"
-                     text="Tool tip: to ensure your data safety you should probably not show or flaunt the data you are not comfortable sharing. Powered by sktcht.cc"
-                     textAlignment="CENTER" wrappingWidth="383.7734375">
+               <Text fill="WHITE" layoutX="6.0" layoutY="14.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tool tip: to ensure your data safety you should probably not show or flaunt the data you are not comfortable sharing. Powered by sktcht.cc" textAlignment="CENTER" wrappingWidth="383.7734375">
                   <font>
-                     <Font name="Eras Medium ITC" size="12.0"/>
+                     <Font name="Eras Medium ITC" size="12.0" />
                   </font>
                </Text>
             </Pane>
          </HBox>
       </bottom>
+      <right>
+         <LineChart prefHeight="391.0" prefWidth="351.0" BorderPane.alignment="CENTER">
+           <xAxis>
+             <CategoryAxis side="BOTTOM" tickLabelFill="WHITE" />
+           </xAxis>
+           <yAxis>
+              <NumberAxis label="Monthly payments" side="TOP" tickLabelFill="#ffffff" />
+           </yAxis>
+         </LineChart>
+      </right>
+      <center>
+         <VBox prefHeight="393.0" prefWidth="336.0" BorderPane.alignment="CENTER">
+            <Pane prefHeight="390.0" prefWidth="289.0"/>
+         </VBox>
+      </center>
    </BorderPane>
 </AnchorPane>
