@@ -74,4 +74,4 @@ Discord: AntiHeresy
 
 ---
 
-Thank you for using the Loan Calculator Application!
+Thank you for dropping by!
