@@ -1,30 +1,34 @@
 package com.example.banker;
 
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import loan.Annuential;
+import loan.Exponential;
+import loan.Linear;
+import loan.Loan;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class HelloController {
-    private final String[] inputTexts = new String[2];
     private Loan loan;
-    private XYChart.Series<Number, Number> series;
+    private int calculationsDone = 0;
 
     @FXML
     private ChoiceBox<String> choiceBox;
 
     @FXML
     private Button closeButton;
-
-    @FXML
-    private Button calcButton;
 
     @FXML
     private TextField zeroTextBox;
@@ -51,12 +55,19 @@ public class HelloController {
     private Text totalInterestText;
 
     @FXML
-    private VBox dataBox;
+    private TableView<PaymentRow> tableA;
+
+    @FXML
+    private TableColumn<PaymentRow, String> monthColumn;
 
     @FXML
     public void initialize() {
         initChoiceBox();
         configureChart();
+        monthlyPaymentText.setVisible(false);
+        totalPaymentText.setVisible(false);
+        totalInterestText.setVisible(false);
+        tableA.setVisible(false);
     }
 
     private void initChoiceBox() {
@@ -78,8 +89,8 @@ public class HelloController {
 
     @FXML
     private void handleCalcButton() {
-        inputTexts[0] = zeroTextBox.getText();
-        inputTexts[1] = oneTextBox.getText();
+        tableA.getColumns().clear();
+        String[] inputTexts = {zeroTextBox.getText(), oneTextBox.getText()};
         final double interest = 3.5;
 
         if (inputTexts[0].isEmpty() || inputTexts[1].isEmpty()) {
@@ -99,12 +110,45 @@ public class HelloController {
                     break;
             }
 
-            double totalPayment = loan.getTotalPayment();
-            double monthlyPayment = loan.getMonthlyPayment();
-            double totalInterest = totalPayment - loan.getBorrowed();
+            loan.calculateAndStoreMonthlyPayments();
+
+            Double[] monthlyPayments = loan.getMonthlyPaymentsData();
+            int totalMonths = loan.getMonthsToPay();
+            int totalYears = (int) Math.ceil((double) totalMonths / 12.0);
+
+            monthColumn.setCellValueFactory(data -> new SimpleObjectProperty<>(data.getValue().getMonth()));
+            tableA.getColumns().add(monthColumn);
+
+            for (int year = 1; year <= totalYears; year++) {
+                TableColumn<PaymentRow, Double> yearColumn = new TableColumn<>("Year " + year);
+                final int yearIndex = year;
+                yearColumn.setCellValueFactory(data -> new SimpleObjectProperty<>(data.getValue().getYear(yearIndex)));
+                tableA.getColumns().add(yearColumn);
+            }
+
+            ObservableList<PaymentRow> data = FXCollections.observableArrayList();
+
+            for (int month = 0; month < 12; month++) {
+                PaymentRow row = new PaymentRow("Month " + (month + 1), totalYears);
+                for (int year = 1; year <= totalYears; year++) {
+                    int paymentIndex = (year - 1) * 12 + month;
+                    if (paymentIndex < totalMonths) {
+                        row.setYear(year, monthlyPayments[paymentIndex]);
+                    }
+                }
+                data.add(row);
+            }
+
+            tableA.setItems(data);
+            monthlyPaymentText.setVisible(true);
+            totalPaymentText.setVisible(true);
+            totalInterestText.setVisible(true);
+            tableA.setVisible(true);
 
             populateData();
-            displayLoanDetails(monthlyPayment, totalPayment, totalInterest);
+            displayLoanDetails(monthlyPayments[0], loan.getTotalPayment(), loan.getAccumulatedInterest(totalMonths));
+
+            calculationsDone++;
 
         } catch (NumberFormatException e) {
             System.err.println("Error parsing input: " + e.getMessage());
@@ -113,9 +157,29 @@ public class HelloController {
         }
     }
 
+    @FXML
+    private void handleOutputBtn() throws IOException {
+        if (calculationsDone <= 0)
+            return;
+
+        BufferedWriter writer = new BufferedWriter(new FileWriter("monthly_payments.txt"));
+
+        int counter = 0;
+
+        for (int i = 0; i < loan.getMonthsToPay(); ++i) {
+            if (i % 12 == 0) {
+                counter++;
+                writer.write("\nyear " + counter + " payments\n");
+            }
+            writer.write(String.format("Month %d %.2f\n", (i % 12 + 1), loan.getMonthlyPaymentsData()[i]));
+        }
+
+        writer.close();
+    }
+
     private void populateData() {
         lineChart.getData().clear();
-        series = new XYChart.Series<>();
+        XYChart.Series<Number, Number> series = new XYChart.Series<>();
         series.setName(choiceBox.getValue() + " Loan Interest");
 
         for (int i = 1; i <= loan.getMonthsToPay(); i++) {
@@ -127,125 +191,30 @@ public class HelloController {
     }
 
     private void displayLoanDetails(double monthlyPayment, double totalPayment, double totalInterest) {
-        monthlyPaymentText.setText("Monthly Payment: $" + String.format("%.2f", monthlyPayment));
-        totalPaymentText.setText("Total Payment: $" + String.format("%.2f", totalPayment));
-        totalInterestText.setText("Total Interest: $" + String.format("%.2f", totalInterest));
+        monthlyPaymentText.setText("First Monthly Payment: " + String.format("%.2f", monthlyPayment));
+        totalPaymentText.setText("Total Payment: " + String.format("%.2f", totalPayment));
+        totalInterestText.setText("Total Interest: " + String.format("%.2f", totalInterest));
     }
 }
 
-class Loan {
-    protected double interest;
-    protected double borrowed;
-    protected int monthsToPay;
+class PaymentRow {
+    private final String month;
+    private final Double[] years;
 
-    Loan() {
-        this.borrowed = 0;
-        this.monthsToPay = 0;
-        this.interest = 0;
+    public PaymentRow(String month, int totalYears) {
+        this.month = month;
+        this.years = new Double[totalYears];
     }
 
-    Loan(double interest, double borrowed, int monthsToPay) {
-        this.interest = interest;
-        this.borrowed = borrowed;
-        this.monthsToPay = monthsToPay;
+    public String getMonth() {
+        return month;
     }
 
-    double getTotalPayment() {
-        return 0;
+    public Double getYear(int year) {
+        return years[year - 1];
     }
 
-    double getMonthlyPayment() {
-        return 0;
-    }
-
-    int getMonthsToPay() {
-        return monthsToPay;
-    }
-
-    double getInterest() {
-        return interest;
-    }
-
-    double getBorrowed() {
-        return borrowed;
-    }
-
-    double getAccumulatedInterest(int month) {
-        return 0;
-    }
-}
-
-class Linear extends Loan {
-    Linear(double interest, double borrowed, int monthsToPay) {
-        super(interest, borrowed, monthsToPay);
-    }
-
-    @Override
-    double getTotalPayment() {
-        return borrowed + (borrowed * (interest / 100) * monthsToPay);
-    }
-
-    @Override
-    double getMonthlyPayment() {
-        return getTotalPayment() / monthsToPay;
-    }
-
-    @Override
-    double getAccumulatedInterest(int month) {
-        return borrowed * (interest / 100) * month;
-    }
-}
-
-class Exponential extends Loan {
-    Exponential(double interest, double borrowed, int monthsToPay) {
-        super(interest, borrowed, monthsToPay);
-    }
-
-    @Override
-    double getTotalPayment() {
-        return getMonthlyPayment() * monthsToPay; // Total payment is monthly payment times number of months
-    }
-
-    @Override
-    double getMonthlyPayment() {
-        double monthlyRate = (interest / 100) / 12; // Convert annual interest rate to monthly
-        if (monthlyRate == 0) {
-            return borrowed / monthsToPay; // If interest rate is 0, simple division
-        }
-        return (borrowed * monthlyRate * Math.pow(1 + monthlyRate, monthsToPay)) /
-                (Math.pow(1 + monthlyRate, monthsToPay) - 1);
-    }
-
-    @Override
-    double getAccumulatedInterest(int month) {
-        return borrowed * (Math.pow(1 + (interest / 100) / 12, month) - 1);
-    }
-}
-
-class Annuential extends Loan {
-    Annuential(double interest, double borrowed, int monthsToPay) {
-        super(interest, borrowed, monthsToPay);
-    }
-
-    @Override
-    double getTotalPayment() {
-        double monthlyInterestRate = interest / 100 / 12;
-        return getMonthlyPayment() * monthsToPay; // Total payment is monthly payment times number of months
-    }
-
-    @Override
-    double getMonthlyPayment() {
-        double monthlyInterestRate = interest / 100 / 12;
-        if (monthlyInterestRate == 0) {
-            return borrowed / monthsToPay; // If interest rate is 0, simple division
-        }
-        return (borrowed * monthlyInterestRate * Math.pow(1 + monthlyInterestRate, monthsToPay)) /
-                (Math.pow(1 + monthlyInterestRate, monthsToPay) - 1);
-    }
-
-    @Override
-    double getAccumulatedInterest(int month) {
-        double monthlyInterestRate = interest / 100 / 12;
-        return (borrowed * (Math.pow(1 + monthlyInterestRate, month) - 1));
+    public void setYear(int year, Double payment) {
+        this.years[year - 1] = payment;
     }
 }

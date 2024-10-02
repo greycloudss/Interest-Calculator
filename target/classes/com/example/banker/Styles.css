@@ -26,6 +26,19 @@
     -fx-text-fill: white;
 }
 
+#outputBtn {
+    -fx-background-color: #2a2d45;
+    -fx-alignment: center;
+    -fx-border-radius: 0%;
+    -fx-border-width: 0px;
+    -fx-text-fill: white;
+}
+
+#outputBtn:hover {
+    -fx-background-color: #322e52;
+    -fx-text-fill: white;
+}
+
 #choiceBox {
     -fx-background-color: #2a2d45;
     -fx-text-fill: white;

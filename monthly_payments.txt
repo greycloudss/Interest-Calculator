@@ -1,0 +1,60 @@
+
+year 1 payments
+Month 1 114.58
+Month 2 114.29
+Month 3 114.00
+Month 4 113.71
+Month 5 113.42
+Month 6 113.13
+Month 7 112.83
+Month 8 112.54
+Month 9 112.25
+Month 10 111.96
+Month 11 111.67
+Month 12 111.38
+
+year 2 payments
+Month 1 111.08
+Month 2 110.79
+Month 3 110.50
+Month 4 110.21
+Month 5 109.92
+Month 6 109.63
+Month 7 109.33
+Month 8 109.04
+Month 9 108.75
+Month 10 108.46
+Month 11 108.17
+Month 12 107.88
+
+year 3 payments
+Month 1 107.58
+Month 2 107.29
+Month 3 107.00
+Month 4 106.71
+Month 5 106.42
+Month 6 106.13
+Month 7 105.83
+Month 8 105.54
+Month 9 105.25
+Month 10 104.96
+Month 11 104.67
+Month 12 104.38
+
+year 4 payments
+Month 1 104.08
+Month 2 103.79
+Month 3 103.50
+Month 4 103.21
+Month 5 102.92
+Month 6 102.63
+Month 7 102.33
+Month 8 102.04
+Month 9 101.75
+Month 10 101.46
+Month 11 101.17
+Month 12 100.88
+
+year 5 payments
+Month 1 100.58
+Month 2 100.29
