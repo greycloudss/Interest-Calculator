@@ -1,15 +1,13 @@
-# Loan Calculator Application
+# Loan Interest Calculator
 
-## Overview
-
-The Loan Calculator Application is a JavaFX-based tool designed to assist users in calculating different types of loans, including Linear, Exponential, and Annuential loans. Users can input the loan amount, interest rate, and duration, and the application will display the total payment, monthly payment, and a graphical representation of the monthly payment over time.
+This project is a simple loan interest calculator built using Java and JavaFX. It allows users to calculate loans with three different interest methods: Linear, Exponential, and Annuential loans. The application provides a graphical interface for easy interaction and a visual representation of monthly payment calculations.
 
 ## Features
 
-- **Loan Types**: Supports multiple loan types (Linear, Exponential, Annuential).
-- **Graphical Representation**: Visualizes monthly payments using a line graph.
-- **User-Friendly Interface**: Intuitive GUI built with JavaFX.
-- **Input Validation**: Handles invalid input gracefully, ensuring a smooth user experience.
+- **Three Loan Types**: Calculate loan interest using Linear, Exponential, and Annuential methods.
+- **Graphical Interface**: User-friendly interface built with JavaFX.
+- **Monthly Payment Chart**: Displays a graphical representation of monthly payments.
+- **Input Validation**: Ensures accurate and valid data input to prevent errors in calculation.
 
 ## Used
 
