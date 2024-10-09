@@ -7,7 +7,7 @@ public class Exponential extends Loan {
 
     @Override
     public double getTotalPayment() {
-        return getMonthlyPayment() * monthsToPay;
+        return borrowed + getAccumulatedInterest(getMonthsToPay());
     }
 
     @Override
@@ -22,15 +22,28 @@ public class Exponential extends Loan {
 
     @Override
     public double getAccumulatedInterest(int month) {
-        return borrowed * (Math.pow(1 + (interest / 100) / 12, month) - 1);
+        double monthlyRate = interest / 100 / 12;
+        return borrowed * (Math.pow(1 + monthlyRate, month) - 1);
     }
 
     @Override
     public void calculateAndStoreMonthlyPayments() {
-        double monthlyRate = (interest / 10) / 12;
+        monthlyPaymentsData = new double[monthsToPay];
+        double monthlyRate = interest / 100 / 12;
+        double remainingBalance = borrowed;
+
         for (int month = 0; month < monthsToPay; month++) {
-            double remainingPrincipal = borrowed * Math.pow(1 + monthlyRate, month);
-            monthlyPaymentsData[month] = remainingPrincipal * monthlyRate;
+            double interestPayment = remainingBalance * monthlyRate;
+            double principalPayment = remainingBalance / (monthsToPay - month);
+            double monthlyPayment = principalPayment + interestPayment;
+
+            monthlyPaymentsData[month] = monthlyPayment;
+
+            remainingBalance -= principalPayment;
+
+            if (month == monthsToPay - 1 && Math.abs(remainingBalance) < 0.01) {
+                remainingBalance = 0;
+            }
         }
     }
 }

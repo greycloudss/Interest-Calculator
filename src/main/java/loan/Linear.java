@@ -7,25 +7,36 @@ public class Linear extends Loan {
 
     @Override
     public double getTotalPayment() {
-        return borrowed + (borrowed * (interest / 100) * monthsToPay);
+        return borrowed + (borrowed * (interest / 100) * (monthsToPay / 12.0));
     }
 
     @Override
     public double getMonthlyPayment() {
-        return getTotalPayment() / monthsToPay;
+        return borrowed / monthsToPay;
     }
 
     @Override
     public double getAccumulatedInterest(int month) {
-        return borrowed * (interest / 100) * month;
+        double monthlyInterestRate = interest / 100 / 12;
+        return borrowed * monthlyInterestRate * month;
     }
 
     @Override
     public void calculateAndStoreMonthlyPayments() {
-        double principalPerMonth = borrowed / monthsToPay;
+        monthlyPaymentsData = new double[monthsToPay];
+        double principalPerMonth = getMonthlyPayment();
+        double remainingBalance = borrowed;
+
         for (int month = 0; month < monthsToPay; month++) {
-            double interestPayment = (borrowed - (principalPerMonth * month)) * (interest / 100 / 12);
-            monthlyPaymentsData[month] = principalPerMonth + interestPayment;
+            double interestPayment = remainingBalance * (interest / 100 / 12);
+            double monthlyPayment = principalPerMonth +  2* interestPayment;
+
+            if (month == monthsToPay - 1)
+                monthlyPayment = monthlyPayment - interestPayment;
+            monthlyPaymentsData[month] = monthlyPayment;
+
+            remainingBalance -= principalPerMonth;
         }
     }
+
 }

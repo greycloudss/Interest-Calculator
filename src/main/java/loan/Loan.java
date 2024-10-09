@@ -4,13 +4,13 @@ public class Loan {
     protected double interest;
     protected double borrowed;
     protected int monthsToPay;
-    protected Double[] monthlyPaymentsData;
+    protected double[] monthlyPaymentsData;
 
     Loan(double interest, double borrowed, int monthsToPay) {
         this.interest = interest;
         this.borrowed = borrowed;
         this.monthsToPay = monthsToPay;
-        this.monthlyPaymentsData = new Double[monthsToPay];
+        this.monthlyPaymentsData = new double[monthsToPay];
     }
 
     public double getTotalPayment() {
@@ -18,10 +18,12 @@ public class Loan {
     }
 
     public double getMonthlyPayment() {
+
         return 0;
     }
 
     public void calculateAndStoreMonthlyPayments() {
+        monthlyPaymentsData = new double[monthsToPay];
         for (int month = 0; month < monthsToPay; month++) {
             monthlyPaymentsData[month] = getMonthlyPayment();
         }
@@ -31,7 +33,7 @@ public class Loan {
         return monthsToPay;
     }
 
-    public Double[] getMonthlyPaymentsData() {
+    public double[] getMonthlyPaymentsData() {
         return monthlyPaymentsData;
     }
 
