@@ -7,7 +7,7 @@
     -fx-border-width: 2px;
 }
 
-#zeroTextBox, #oneTextBox {
+#zeroTextBox, #oneTextBox, #frmTextBox, #toTextBox, #frmTextBox1, #toTextBox1 {
     -fx-background-color: #2a2d45;
     -fx-text-fill: white;
     -fx-border-width: 0px;
